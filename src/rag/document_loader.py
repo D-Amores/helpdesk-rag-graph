@@ -40,7 +40,7 @@ class DocumentLoader:
                 {
                     "filename": filename,
                     "doc_type": self._get_doc_type(filename),
-                    "doc_id": self._generate_doc_id(doc),
+                    "doc_id": self._generate_doc_id(doc.page_content),
                 }
             )
         return documents
