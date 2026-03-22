@@ -1,22 +1,26 @@
+# main.py
 import sys
 import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
-from rag.rag_pipeline import RAGPipeline
+from rag.rag_system import VectorRAGSystem
 
 
 def main():
-    print("🎧 Testing RAG Pipeline")
+    print("🎧 Testing VectorRAGSystem")
     print("=" * 40)
 
-    pipeline = RAGPipeline()
-    vectorstore = pipeline.build(force_rebuild=True)
+    # Crear el sistema RAG
+    rag = VectorRAGSystem()
 
-    if vectorstore:
-        retriever = pipeline.get_retriever(vectorstore)
-        results = retriever.search("resetear contraseña")
-        print(retriever.format_results(results))
+    # Probar búsqueda
+    resultado = rag.search("¿cómo reseteo mi contraseña?")
+
+    print("\n📊 Resultado:")
+    print(f"Respuesta:  {resultado['response']}")
+    print(f"Confianza:  {resultado['confidence']}")
+    print(f"Fuentes:    {resultado['sources']}")
 
 
 if __name__ == "__main__":
