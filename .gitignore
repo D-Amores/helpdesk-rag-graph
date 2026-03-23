@@ -12,3 +12,6 @@ wheels/
 .env
 
 chroma_db
+helpdesk.db
+helpdesk.db-shm
+helpdesk.db-wal
