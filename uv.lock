@@ -626,7 +626,7 @@ wheels = [
 [[package]]
 name = "helpdesk-rag-graph"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-chroma" },
