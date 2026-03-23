@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+.env
+
+chroma_db
+helpdesk.db
+helpdesk.db-shm
+helpdesk.db-wal
