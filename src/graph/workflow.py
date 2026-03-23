@@ -2,6 +2,8 @@ from langgraph.graph import StateGraph, START, END
 from graph.state import HelpdeskState
 from graph.nodes import RagNode, ClassifyNode, EscalingNode, ResponseNode
 from graph.edges import decide_from_clasification, decide_since_human
+import sqlite3
+from langgraph.checkpoint.sqlite import SqliteSaver
 
 
 class HelpdeskWorkflow:
@@ -47,4 +49,25 @@ class HelpdeskWorkflow:
         self.graph.add_edge("process_human", END)
         self.graph.add_edge("response_final", END)
 
-        return self.graph.compile()
+        return self.graph
+
+    def compile_graph(self):
+        """Compile the graph with Checkpointer"""
+
+        if not self.graph:
+            self.build_graph()
+
+        conn = sqlite3.connect("helpdesk.db", check_same_thread=False)
+
+        checkpointer = SqliteSaver(conn)
+
+        compiled_graph = self.graph.compile(
+            checkpointer=checkpointer, interrupt_before=["process_human"]
+        )
+
+        return compiled_graph
+
+
+def create_helpdesk():
+    helpdesk = HelpdeskWorkflow()
+    return helpdesk.compile_graph()
