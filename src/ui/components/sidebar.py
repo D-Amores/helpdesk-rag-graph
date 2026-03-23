@@ -39,8 +39,16 @@ def render_sidebar():
 
         # Acciones
         st.subheader("⚙️ Settings")
+        # sidebar.py
         if st.button("🔄 Rebuild RAG"):
-            _setup_rag(force_rebuild=True)
+            st.warning(
+                """
+                ⚠️ To rebuild the knowledge base:
+                1. Stop the application
+                2. Add/modify .md files in docs/
+                3. Click 'Configure RAG' when you restart
+            """
+            )
 
         if st.button("🗑️ Clear Tickets"):
             st.session_state.tickets = {}
