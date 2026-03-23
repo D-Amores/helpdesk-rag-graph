@@ -120,3 +120,25 @@ class HelpdeskGraph:
             "response_final": final_response,
             "history": ["Final response generated"],
         }
+
+    # FUNCTION ROUTING ===============================================
+
+    def decide_from_clasification(self, state: HelpdeskState):
+        """Decide the next node based on the classification"""
+
+        category = state.get("category", "escalated")
+
+        if category == "automatic":
+            return "response_final"
+        else:
+            return "escalated"
+
+    def decide_since_human(self, state: HelpdeskState):
+        """Decide the next node based on the human response"""
+
+        response_human = state.get("response_human", "")
+
+        if response_human:
+            return "process_human_response"
+        else:
+            return "waiting_human"
